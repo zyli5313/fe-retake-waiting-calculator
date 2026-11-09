@@ -1,0 +1,48 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>FE Retake Waiting Period Calculator</title>
+<meta name="description" content="Estimate your next eligible FE exam window from the NCEES three-attempts-per-year rule and plan the retake study block.">
+<meta name="robots" content="index,follow">
+<style>
+:root{--bg:#0f172a;--fg:#e2e8f0;--muted:#94a3b8;--accent:#38bdf8;--card:#1e293b}*{box-sizing:border-box}body{margin:0;font-family:system-ui,sans-serif;background:var(--bg);color:var(--fg);line-height:1.55}main{max-width:760px;margin:0 auto;padding:2rem 1.25rem 4rem}h1{font-size:1.7rem;margin:0 0 .5rem}p.lead,.muted{color:var(--muted)}.card{background:var(--card);border-radius:12px;padding:1rem 1.15rem;margin:1rem 0}label{display:block;margin:.5rem 0 .2rem;font-size:.9rem;color:var(--muted)}input,select,button{font:inherit}input,select{width:100%;background:#0b1220;border:1px solid #334155;color:var(--fg);border-radius:8px;padding:.5rem .65rem}button{margin-top:.8rem;background:var(--accent);color:#0f172a;border:0;border-radius:8px;padding:.55rem 1rem;font-weight:600;cursor:pointer}a{color:var(--accent)}#out{white-space:pre-wrap}footer{margin-top:2rem;padding-top:1rem;border-top:1px solid #334155;color:var(--muted);font-size:.9rem}.guides{list-style:none;padding:0}.guides li{margin:.35rem 0}
+</style></head><body><main>
+<h1>FE retake waiting period calculator</h1>
+<p class="lead">NCEES allows up to three attempts in a 12-month window, with a waiting period between sittings. Use this to sketch your next eligible month, then rebuild from the diagnostic.</p>
+<div class="card">
+<label for="last">Date of last FE attempt</label>
+<input type="date" id="last">
+<label for="attempts">Attempts already used in the rolling 12 months</label>
+<select id="attempts"><option>1</option><option>2</option><option>3</option></select>
+<button type="button" id="go">Estimate next window</button>
+<pre id="out" class="muted"></pre>
+</div>
+<section>
+<h2>Rebuild from the diagnostic</h2>
+<ul class="guides">
+<li><a href="https://acefeexam.com/failed-the-fe-exam" target="_blank" rel="noopener">Failed the FE exam — what to do next</a></li>
+<li><a href="https://acefeexam.com/fe-diagnostic-report-explained" target="_blank" rel="noopener">FE diagnostic report explained</a></li>
+<li><a href="https://acefeexam.com/fe-retake-planner" target="_blank" rel="noopener">Free FE retake planner</a></li>
+<li><a href="https://acefeexam.com/fe-retake-study-plan" target="_blank" rel="noopener">FE retake study plan</a></li>
+<li><a href="https://acefeexam.com/fe-retake-waiting-period" target="_blank" rel="noopener">FE retake waiting period rules</a></li>
+<li><a href="https://acefeexam.com/how-many-times-can-you-take-the-fe" target="_blank" rel="noopener">How many times can you take the FE?</a></li>
+<li><a href="https://acefeexam.com/failed-the-fe-twice" target="_blank" rel="noopener">Failed the FE twice</a></li>
+<li><a href="https://acefeexam.com/fe-retake" target="_blank" rel="noopener">FE retake overview</a></li>
+</ul>
+</section>
+<footer>Fan-made companion for <a href="https://acefeexam.com/" target="_blank" rel="noopener">acefeexam.com</a>. Confirm current NCEES policy on ncees.org — rules can change.</footer>
+<script>
+document.getElementById('go').onclick=function(){
+  var d=document.getElementById('last').value; var a=+document.getElementById('attempts').value;
+  var out=document.getElementById('out');
+  if(!d){out.textContent='Pick the date of your last attempt.';return;}
+  var last=new Date(d+'T12:00:00');
+  var wait=new Date(last); wait.setDate(wait.getDate()+30); // typical minimum spacing sketch
+  var msg='Sketch only — confirm with NCEES:\\n';
+  msg+='• Last attempt: '+last.toDateString()+'\\n';
+  msg+='• Attempts used in rolling year: '+a+' of 3\\n';
+  if(a>=3){msg+='• You may need to wait until the oldest attempt falls outside the 12-month window before a 4th try.\\n';}
+  else {msg+='• Earliest planning date after a ~30-day buffer: '+wait.toDateString()+'\\n';
+  msg+='• Open the retake planner with your diagnostic and rebuild the weak areas before booking.\\n';}
+  out.textContent=msg;
+};
+</script>
+</main></body></html>
